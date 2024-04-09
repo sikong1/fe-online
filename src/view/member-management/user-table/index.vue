@@ -1,5 +1,6 @@
 <template>
   <div class="user-table">
+    <div class="dep">{{ dep }}</div>
     <div class="search">
       <el-select
         class="select"
@@ -26,7 +27,7 @@
     >
       <el-table-column type="selection" width="55" />
       <el-table-column prop="id" label="id" width="200" />
-      <el-table-column prop="name" label="姓名" />
+      <el-table-column prop="name" label="用户名" />
     </el-table>
   </div>
 </template>
@@ -76,8 +77,10 @@ const change = (val: string) => {
 
 // 外部树形组件调用
 const orgId = ref("0");
-function getSelection(id: string) {
+const dep = ref("");
+function getSelection(id: string, detArr: string[]) {
   orgId.value = id;
+  dep.value = detArr.join("/");
 
   // 树形组件点击
   getData({
@@ -103,6 +106,10 @@ defineExpose({
     .select {
       flex: 0.9;
     }
+  }
+
+  .dep {
+    margin-bottom: 20px;
   }
 }
 </style>

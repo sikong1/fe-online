@@ -13,8 +13,8 @@ import UserTable from "@/view/member-management/user-table/index.vue";
 const userTableRef = ref<OrgTree>();
 
 // 获取 UserTable 用户列表
-const getOrgTreeGetData = (id: string) => {
-  userTableRef.value && userTableRef.value?.getSelection(id);
+const getOrgTreeGetData = (id: string, detArr: string[]) => {
+  userTableRef.value && userTableRef.value?.getSelection(id, detArr);
 };
 </script>
 

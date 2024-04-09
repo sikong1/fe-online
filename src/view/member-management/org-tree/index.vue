@@ -26,22 +26,34 @@ const loadNode = async (
   resolve: (data: Org[]) => void,
   reject: () => void
 ) => {
-  console.log(node);
-
   // 默认加载根节点
   if (node.level === 0) {
     const data = await getList();
     return resolve(data);
   }
-
   // 获取子数据
   const id = node.data.id;
   const data = await getList(id);
 
+  const detArr = getDepArr(node);
   // 通知 App.vue 刷新 UserTable 数据
-  propsVal.getOrgTreeGetData && propsVal.getOrgTreeGetData(id);
+  propsVal.getOrgTreeGetData && propsVal.getOrgTreeGetData(id, detArr);
 
   return resolve(data);
+};
+
+const getDepArr = (node: Node) => {
+  const data: string[] = []
+  const getDep = (node: Node) => {
+    const level = node.level
+    const name = node.data.name
+    if (level !== 0) {
+      data.unshift(name)
+      getDep(node.parent)
+    }
+  }
+  getDep(node)
+  return data
 };
 
 // 获取数据
