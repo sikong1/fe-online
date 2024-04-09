@@ -69,15 +69,14 @@ const getData = async (params: Params) => {
 const loading = ref(false);
 const option = ref<User[]>([]);
 const remoteMethod = (query: string) => {
-  const fn = () => {
-    console.log(query,'query');
-    
+  const fn = async () => {
     if (query) {
       loading.value = true;
       loading.value = false;
-      option.value = tableData.value.filter((item) =>
-        item.name.includes(query)
-      );
+      option.value = await userApi.query({
+        name: query,
+        orgId: orgId.value,
+      });
     } else {
       option.value = [];
     }
@@ -88,13 +87,15 @@ const remoteMethod = (query: string) => {
 // 改变选择
 const change = (val: string) => {
   id.value = val;
-  const item = tableData.value.find((item) => item.id === val);
-  item &&
+  const item = option.value.find((item) => item.id === val);
+  if (item) {
     getData({
       orgId: orgId.value,
       name: item.name,
       id: item.id,
     });
+    option.value = [item];
+  }
 };
 
 // 外部树形组件调用
