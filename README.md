@@ -36,8 +36,65 @@
   "userId": 111323290434354540545
 }
 ```
+```javascript
+使用JSON.parse实现
+```
+
+
+
 ### 前端需要*稳定*每隔`1s`向服务端请求`API`, 请问如何实现？
+
+```javascript
+function sendRequest() {
+    fetch('接口url')
+        .then(response => {
+            // 处理响应
+            if (!response.ok) {
+                throw new Error('网络响应不正常');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // 处理数据
+            console.log(data);
+            
+            // 在请求完成后设置下一个定时器，确保每隔1秒发送一次请求
+            setTimeout(sendRequest, 1000);
+        })
+        .catch(error => {
+            // 处理错误
+            console.error(error);
+            
+            // 在出现错误时也设置下一个定时器，确保每隔1秒发送一次请求
+            setTimeout(sendRequest, 1000);
+        });
+}
+
+// 开始发送第一次请求
+sendRequest();
+```
+
+
 
 ### 什么情况下，你会为你的项目引入状态管理库，比如`Redux`, `Pinia`, 可以简述一下起到了什么作用么？
 
+```
+比如登录流程，很多地方用到就会使用 pinia，并且 pinia 有持久化缓存插件，只要改变 pinia 的数据，本地缓存会同步修改。
+还有就是两个组件需要通信，但是层级过深（一般不是父子组件或兄弟组件），我也会选择 pinia 存储，统一管理数据，但是业务逻辑不建议在 pinia 中实现，需求变更维护起来很麻烦。
+
+作用：
+统一维护数据，不需要一层一层去寻找数据来源。
+而且具有响应式，方便操作。
+持久化插件、调试插件等。
+```
+
+
+
 ### 为什么`ESM`与`CJS`不能兼容？
+
+```
+1.语法不同，ESM 是 export 导出，而 CJS 是 module.exports。
+2.ESM 是静态加载（编译的时候就会抛出错误），CJS是动态加载的（运行的时候才会抛出错误）。
+3.ESM是严格作用域，而CJS是非严格作用域
+```
+
