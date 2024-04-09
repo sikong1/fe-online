@@ -1,10 +1,28 @@
 <template>
-  <div>
-    1111
+  <div class="box">
+    <OrgTree :getOrgTreeGetData="getOrgTreeGetData" />
+    <UserTable ref="userTableRef" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-onMounted(() => {});
+import { ref } from "vue";
+import OrgTree from "@/view/member-management/org-tree/index.vue";
+import UserTable from "@/view/member-management/user-table/index.vue";
+
+const userTableRef = ref<OrgTree>();
+
+// 获取 UserTable 用户列表
+const getOrgTreeGetData = (id: string) => {
+  userTableRef.value && userTableRef.value?.getSelection(id);
+};
 </script>
+
+<style lang="scss" scoped>
+.box {
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
+  margin: 0 auto;
+}
+</style>
