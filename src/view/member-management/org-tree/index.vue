@@ -61,10 +61,10 @@ const getList = (parentId = "0"): Promise<Org[]> => {
   return new Promise((resolve, reject) => {
     orgApi
       .query(parentId)
-      .then((users) => {
+      .then((users: Org[]) => {
         resolve(users);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         reject(err);
       });
   });

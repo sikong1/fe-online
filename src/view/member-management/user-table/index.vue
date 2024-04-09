@@ -66,13 +66,10 @@ const getData = async (params: Params) => {
   tableData.value = users;
 };
 
-const loading = ref(false);
 const option = ref<User[]>([]);
 const remoteMethod = (query: string) => {
-  const fn = async () => {
+  const getOption = async () => {
     if (query) {
-      loading.value = true;
-      loading.value = false;
       option.value = await userApi.query({
         name: query,
         orgId: orgId.value,
@@ -81,7 +78,7 @@ const remoteMethod = (query: string) => {
       option.value = [];
     }
   };
-  debounce(fn)();
+  debounce(getOption)();
 };
 
 // 改变选择
