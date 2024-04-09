@@ -6,12 +6,14 @@
         class="select"
         v-model="id"
         filterable
+        remote
         placeholder="Select"
         style="width: 240px"
         @change="change"
+        :remote-method="remoteMethod"
       >
         <el-option
-          v-for="item in tableData"
+          v-for="item in option"
           :key="item.id"
           :label="item.name"
           :value="item.id"
@@ -35,6 +37,7 @@
 import { computed, onMounted, ref } from "vue";
 import { ElTable } from "element-plus";
 import userApi, { User } from "@/api/user";
+import { debounce } from "@/utils/index";
 
 onMounted(() => {
   getData({
@@ -61,6 +64,25 @@ const handleSelectionChange = (val: User[]) => {
 const getData = async (params: Params) => {
   const users = await userApi.query(params);
   tableData.value = users;
+};
+
+const loading = ref(false);
+const option = ref<User[]>([]);
+const remoteMethod = (query: string) => {
+  const fn = () => {
+    console.log(query,'query');
+    
+    if (query) {
+      loading.value = true;
+      loading.value = false;
+      option.value = tableData.value.filter((item) =>
+        item.name.includes(query)
+      );
+    } else {
+      option.value = [];
+    }
+  };
+  debounce(fn)();
 };
 
 // 改变选择
