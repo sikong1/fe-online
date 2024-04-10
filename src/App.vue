@@ -7,10 +7,10 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import OrgTree from "@/view/member-management/org-tree/index.vue";
-import UserTable from "@/view/member-management/user-table/index.vue";
+import OrgTree from "/@/view/member-management/org-tree/index.vue";
+import UserTable from "/@/view/member-management/user-table/index.vue";
 
-const userTableRef = ref<OrgTree>();
+const userTableRef = ref<InstanceType<typeof UserTable>>();
 
 // 获取 UserTable 用户列表
 const getOrgTreeGetData = (id: string, detArr: string[]) => {
