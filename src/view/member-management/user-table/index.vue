@@ -36,8 +36,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { ElTable } from "element-plus";
-import userApi, { User } from "/@/api/user";
-import { debounce } from "/@/utils/index";
+import userApi, { User } from "@/api/user";
+import { debounce } from "@/utils/index";
 
 onMounted(() => {
   getData({

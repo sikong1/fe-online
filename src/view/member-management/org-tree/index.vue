@@ -6,7 +6,7 @@
 </template>
 <script setup lang="ts">
 import type Node from "element-plus/es/components/tree/src/model/node";
-import orgApi, { Org } from "/@/api/org";
+import orgApi, { Org } from "@/api/org";
 
 const propsVal = defineProps({
   getOrgTreeGetData: {

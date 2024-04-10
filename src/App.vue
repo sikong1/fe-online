@@ -7,8 +7,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import OrgTree from "/@/view/member-management/org-tree/index.vue";
-import UserTable from "/@/view/member-management/user-table/index.vue";
+import OrgTree from "@/view/member-management/org-tree/index.vue";
+import UserTable from "@/view/member-management/user-table/index.vue";
 
 const userTableRef = ref<InstanceType<typeof UserTable>>();
 
